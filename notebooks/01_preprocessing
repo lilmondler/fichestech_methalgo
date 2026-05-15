@@ -1,8 +1,11 @@
-#Section 1 — Configuration et installation
-#Cette section configure l'environnement de recherche en définissant les sources de données, les paramètres de modélisation thématique et la charte graphique de l'analyse.
-  
+---
+## Section 1 — Configuration et installation
+Cette section configure l'environnement de recherche en définissant les sources de données, les paramètres de modélisation thématique et la charte graphique de l'analyse.
+
   
 # CONFIGURATION
+
+
 INCEL_PATH  = "sample_data/incels.csv"   # path to incels dataset
 FEMCEL_PATH = "sample_data/Truefemcels.csv"  # path to femcels dataset
 
@@ -50,7 +53,7 @@ def load_dataset(path: str, name: str):
     return df
 
 
-# Path to dataset 
+# Load both datasets
 df_incels  = load_dataset('/Incels.csv',  'incels')
 df_femcels = load_dataset('/Truefemcels.csv', 'femcels')
 
@@ -58,6 +61,127 @@ datasets = {'incels': df_incels, 'femcels': df_femcels}
 
 # Quick sanity check
 df_incels.head(3)
+ [incels] Columns after processing: ['author', 'date', 'text']
+[incels]  123,895 posts  |  10,722 unique authors
+[femcels] Columns after processing: ['author', 'date', 'text']
+[femcels]  258 posts  |  92 unique authors
+
+  
+    
+
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+
+  
+    
+      
+      author
+      created_utc
+      body
+      community
+    
+  
+  
+    
+      0
+      yeahthatincelblogger
+      2014-03-17 07:55:44+00:00
+      A blogger TarnishedSophia has questions for th...
+      incels
+    
+    
+      1
+      yeahthatincelblogger
+      2014-03-17 07:57:27+00:00
+      A 48 year-old virgin's blog
+      incels
+    
+    
+      2
+      yeahthatincelblogger
+      2014-03-18 10:03:02+00:00
+      Why you’re (probably) a feminist or their usef...
+      incels
+  
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  
+
+    
+      const buttonEl =
+        document.querySelector('#df-e98feef3-dfec-4031-af31-97c729bcc894 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-e98feef3-dfec-4031-af31-97c729bcc894');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    
+  
+
+
+    
+  
 
 
 # IMPORTS
@@ -88,6 +212,16 @@ sns.set_theme(style='whitegrid', font_scale=1.1)
 plt.rcParams.update({'figure.dpi': 130, 'figure.facecolor': 'white'})
 
 print('All imports successful.')
+
+All imports successful.
+
+### 1.1 — Text Preprocessing
+
+The cleaning pipeline:
+1. Lowercase all text
+2. Strip URLs, Reddit handles, punctuation, and digits
+3. Remove English stopwords + platform noise (e.g. `[deleted]`, `reddit`)
+4. Lemmatise each token with NLTK's `WordNetLemmatizer`
 
 
 # Platform-specific noise words to exclude from analysis
@@ -121,6 +255,20 @@ def build_corpus(df) -> object:
     """Apply clean_text to every row of the 'body' column."""
     print('  Preprocessing text...')
     return df['body'].astype(str).apply(clean_text)
+
+
+# Build corpora
+corpus_incels  = build_corpus(df_incels)
+corpus_femcels = build_corpus(df_femcels)
+
+print('Sample cleaned post (incels):')
+print(corpus_incels.iloc[0])
+
+  Preprocessing text...
+  Preprocessing text...
+Sample cleaned post (incels):
+blogger tarnishedsophia question thatincelblogger
+
 
 
 # Build corpora
