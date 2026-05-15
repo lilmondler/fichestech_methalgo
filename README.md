@@ -2,13 +2,14 @@
 
 ## Analyse comparative des communautés incels et femcels sur Reddit
 
-### Réalisé par
+### Réalisé par: 
 
-**Snezhana Galimova**  
+**Snezhana Galimova** 
 Master 1 Sociologie - Chargé(e) d’études sociologiques  
 Sorbonne Université  
 Année universitaire 2025-2026
 
+### Dans le cadre de projet en groupe avec Salsabile Lamine
 ---
 
 # Présentation du projet
