@@ -4,8 +4,6 @@ Cartographie des sous-cultures numériques : Analyse comparative des communauté
 
 ### Réalisé par  
 **Snezhana Galimova**  
-**Salsabile Lamine**
-
 Master 1 Sociologie — Chargé(e) d’études sociologiques  
 Sorbonne Université  
 Année universitaire 2025–2026
