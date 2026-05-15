@@ -9,7 +9,7 @@ Master 1 Sociologie - Chargé(e) d’études sociologiques
 Sorbonne Université  
 Année universitaire 2025-2026
 
-### Dans le cadre de projet en groupe avec Salsabile Lamine
+Dans le cadre de projet en groupe avec Salsabile Lamine
 ---
 
 # Présentation du projet
