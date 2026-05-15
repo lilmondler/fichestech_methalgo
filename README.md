@@ -1,193 +1,184 @@
-# # Cartographie des sous-cultures numériques  
-Cartographie des sous-cultures numériques : Analyse comparative des communautés incels et femcels sur Reddit
-## Fiche technique
+Cartographie des sous-cultures numériques
 
-### Réalisé par  
-**Snezhana Galimova**  
-Master 1 Sociologie — Chargé(e) d’études sociologiques  
-Sorbonne Université  
+Analyse comparative des communautés incels et femcels sur Reddit
+Réalisé par
+
+Snezhana Galimova
+Master 1 Sociologie — Chargé(e) d’études sociologiques
+Sorbonne Université
 Année universitaire 2025–2026
 
----
+Présentation du projet
 
-# Présentation du projet
+Ce projet propose une analyse comparative de deux sous-cultures numériques présentes sur Reddit : les communautés incels et femcels.
 
-Ce projet propose une analyse comparative de deux sous-cultures numériques présentes sur Reddit : les communautés **incels** et **femcels**.
+Ces deux espaces sont souvent présentés comme des « miroirs genrés » l’un de l’autre. L’objectif de ce travail est donc de vérifier si leurs discours fonctionnent réellement de manière similaire, ou s’ils possèdent au contraire des caractéristiques propres sur le plan :
 
-L’objectif est d’étudier si ces espaces peuvent être considérés comme des communautés discursives distinctes, possédant leurs propres caractéristiques :
+linguistique ;
+émotionnel ;
+structurel.
 
-- linguistiques ;
-- émotionnelles ;
-- structurelles.
+L’analyse mobilise plusieurs outils de traitement automatique du langage naturel (NLP) afin d’explorer les différences entre les deux communautés.
 
-L’analyse mobilise plusieurs méthodes de traitement automatique du langage naturel (NLP) afin de comparer les contenus publiés dans les deux communautés.
+Hypothèses
+H1 — Convergence linguistique
 
----
+Malgré des positions genrées opposées, les deux communautés partagent-elles un vocabulaire et des thématiques suffisamment similaires pour qu’un classifieur automatique ait du mal à les distinguer ?
 
-# Hypothèses
+H2 — Asymétrie émotionnelle
 
-## H1 — Convergence linguistique
-
-Les communautés incels et femcels partagent-elles un vocabulaire suffisamment similaire pour empêcher leur distinction automatique ?
-
-Hypothèse :
-les deux groupes possèdent des registres lexicaux distincts permettant une classification automatique des publications.
-
----
-
-## H2 — Asymétrie émotionnelle
-
-Les deux communautés expriment-elles des profils émotionnels différents ?
+Les émotions exprimées prennent-elles des formes différentes dans les deux communautés ?
 
 Hypothèse :
-le discours incel présente une polarisation émotionnelle plus forte et davantage de négativité.
+le discours incel présenterait une polarisation émotionnelle plus forte et des formes de négativité plus intenses.
 
----
+H3 — Chambre d’écho
 
-## H3 — Chambre d’écho
+Une forte concentration du contenu autour d’un petit noyau d’auteurs, combinée à un vocabulaire répétitif, peut-elle révéler un fonctionnement en chambre d’écho ?
 
-La structure des interactions révèle-t-elle un effet de chambre d’écho ?
-
-Hypothèse :
-une faible minorité d’auteurs très actifs produit une grande partie du contenu dans les communautés incels.
-
----
-
-# Données
+Données
 
 Les données utilisées proviennent des subreddits :
 
-- `r/Incels`
-- `r/Truefemcels`
+r/Incels
+r/Truefemcels
 
 Les corpus ont été exportés au format CSV puis harmonisés avant l’analyse.
 
----
+Après traitement :
 
-# Méthodologie
+corpus incels : plus de 929 000 publications ;
+corpus femcels : 258 publications.
 
-L’analyse repose sur un pipeline en plusieurs étapes.
+Ce déséquilibre constitue une limite importante de l’étude et impose de rester prudent dans l’interprétation des résultats concernant les femcels.
 
-## 1. Prétraitement des données
+Méthodologie
 
-Les textes ont été normalisés afin de rendre les corpus comparables.
+L’analyse repose sur plusieurs étapes complémentaires.
 
-Le prétraitement comprend :
+1. Prétraitement NLP
 
-- conversion en minuscules ;
-- suppression des URLs ;
-- suppression des mentions Reddit ;
-- suppression de la ponctuation ;
-- suppression des stopwords ;
-- suppression du bruit de plateforme ;
-- lemmatisation via WordNetLemmatizer.
+Les textes sont nettoyés et normalisés afin de rendre les corpus comparables.
 
----
+Le pipeline comprend :
 
-## 2. Analyse fréquentielle
+conversion en minuscules ;
+suppression des URLs ;
+suppression des mentions Reddit ;
+suppression de la ponctuation et des chiffres ;
+suppression des stopwords anglais ;
+suppression du bruit de plateforme Reddit ;
+tokenisation ;
+lemmatisation avec WordNetLemmatizer.
+2. Classification automatique (H1)
 
-Une analyse des mots les plus fréquents a été réalisée afin d’identifier les thèmes dominants de chaque communauté.
+Un pipeline TfidfVectorizer + LogisticRegression est entraîné afin de prédire automatiquement la communauté d’origine de chaque publication.
 
----
+L’objectif est de tester si les deux communautés sont suffisamment proches lexicalement pour tromper le modèle.
 
-## 3. TF-IDF + Régression Logistique
+L’analyse des coefficients permet également d’identifier les mots les plus discriminants de chaque communauté.
 
-Le modèle TF-IDF permet de pondérer les mots selon leur importance relative dans chaque corpus.
+3. Paysage textuel
 
-Une régression logistique est ensuite utilisée afin de prédire automatiquement la communauté d’origine des publications.
+Deux représentations numériques du texte sont utilisées :
 
----
+CountVectorizer (Bag-of-Words) ;
+TfidfVectorizer.
 
-## 4. Analyse de sentiment (VADER)
+Le Bag-of-Words mesure la fréquence brute des mots, tandis que le TF-IDF met davantage en valeur les termes caractéristiques d’une communauté.
 
-L’outil VADER permet de mesurer automatiquement :
+Une analyse du chevauchement lexical est également réalisée afin d’évaluer la part du vocabulaire partagé entre les deux groupes.
 
-- la positivité ;
-- la négativité ;
-- la neutralité ;
-- le score émotionnel global (*compound*).
+4. Analyse de sentiment (H2)
 
----
+L’outil VADER est utilisé afin de mesurer automatiquement :
 
-## 5. Analyse structurelle
+le score positif (pos) ;
+le score négatif (neg) ;
+le score neutre (neu) ;
+le score global (compound).
 
-Une analyse de concentration des auteurs a été réalisée afin d’évaluer la présence d’effets de chambre d’écho.
+L’analyse compare :
 
-Deux indicateurs ont été utilisés :
+les distributions émotionnelles ;
+l’intensité des émotions ;
+le lien entre négativité et participation.
+5. Analyse structurelle (H3)
 
-- concentration du contenu par centiles d’auteurs ;
-- Type-Token Ratio (TTR).
+Une analyse de concentration des auteurs permet d’évaluer la présence d’effets de chambre d’écho.
 
----
+Deux indicateurs sont mobilisés :
 
-# Principaux résultats
+Concentration du contenu
 
-## H1 — Distinction linguistique forte
+Part du contenu produite par les auteurs les plus actifs :
 
-Le classifieur atteint une accuracy proche de 100 %, ce qui indique que les deux communautés possèdent des registres lexicaux fortement distincts.
+top 1 % ;
+top 5 % ;
+top 10 %.
+Richesse lexicale (TTR)
 
-Les mots discriminants révèlent également des différences importantes dans les thèmes dominants et les styles discursifs.
+Le Type-Token Ratio (TTR) mesure la diversité du vocabulaire utilisé par différents groupes d’auteurs.
 
----
+Une baisse du TTR chez les auteurs hyperactifs peut signaler un discours plus répétitif et homogène.
 
-## H2 — Polarisation émotionnelle chez les incels
+Principaux résultats
+H1 — Distinction linguistique forte
 
-Les distributions émotionnelles des incels sont plus étalées.
+Le classifieur atteint une accuracy proche de 100 %.
 
-On observe :
+Cependant, ce résultat doit être nuancé : le fort déséquilibre entre les corpus pousse le modèle à prédire majoritairement la classe incel.
 
-- davantage de messages très négatifs ;
-- davantage de messages très positifs ;
-- une intensité émotionnelle plus forte.
+Malgré cela, les mots discriminants montrent des différences importantes entre les univers discursifs des deux communautés.
 
-Les femcels présentent des distributions plus resserrées et émotionnellement plus homogènes.
+H2 — Intensité émotionnelle plus forte chez les incels
 
----
+Les distributions émotionnelles des incels apparaissent plus étalées :
 
-## H3 — Forte concentration du contenu chez les incels
+davantage de messages très négatifs ;
+davantage de messages très positifs ;
+polarisation émotionnelle plus forte.
 
-Les résultats montrent une forte centralisation du discours incel.
+Les profils émotionnels femcels semblent plus homogènes, mais le faible volume de données limite les conclusions possibles.
 
-- le top 1 % des auteurs produit environ 57 % du contenu ;
-- le top 5 % produit plus de 80 % du corpus ;
-- le top 10 % produit près de 88 % des publications.
+H3 — Forte concentration du contenu chez les incels
 
-Chez les femcels, la distribution du contenu est beaucoup plus diffuse.
+Les résultats montrent une forte centralisation du discours incel :
 
-Cette concentration suggère un fonctionnement proche d’une chambre d’écho.
+le top 1 % des auteurs produit environ 57 % du contenu ;
+le top 5 % produit plus de 80 % du corpus ;
+le top 10 % produit près de 88 % des publications.
 
----
+Chez les incels, les auteurs les plus actifs utilisent également un vocabulaire plus répétitif (TTR faible), ce qui suggère un fonctionnement proche d’une chambre d’écho.
 
-# Reproductibilité
+Cartographie temporelle
 
-Le notebook peut être exécuté dans l’ordre indiqué dans le dossier `/notebooks`.
+Une analyse temporelle des pics d’activité a également été explorée.
 
----
+Cependant, cette partie n’a pas été retenue dans le poster final en raison :
 
-# Limites
+du faible volume de données femcels ;
+du risque de surinterprétation des pics d’activité ;
+de l’impossibilité d’attribuer avec certitude ces variations à des événements externes précis.
+Limites
 
 Cette étude présente plusieurs limites :
 
-- déséquilibre entre les corpus ;
-- taille réduite du corpus femcel ;
-- représentativité limitée des données Reddit ;
-- simplification des émotions par les outils automatiques de NLP.
-
----
-
-# Poster scientifique
-
-Le poster présenté dans le cadre du cours  `/poster`.
-
----
-
-# Technologies utilisées
-
-- Python
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- scikit-learn
-- nltk
-- vaderSentiment
+déséquilibre important entre les corpus ;
+faible taille du corpus femcel ;
+représentativité limitée des données Reddit ;
+simplification des émotions par les outils automatiques de NLP ;
+difficulté d’interpréter certains pics temporels sans contexte externe.
+Structure du projet
+/notebooks — notebook principal d’analyse
+/poster — poster scientifique du projet
+/data — fichiers CSV utilisés pour l’analyse
+Technologies utilisées
+Python
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+nltk
+vaderSentiment
