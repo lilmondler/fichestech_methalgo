@@ -158,39 +158,9 @@ Cette concentration suggère un fonctionnement proche d’une chambre d’écho.
 
 ---
 
-# Structure du dépôt
-
-```txt
-/data
-    incels.csv
-    Truefemcels.csv
-
-/notebooks
-    01_preprocessing.ipynb
-    02_word_frequency.ipynb
-    03_tfidf_logreg.ipynb
-    04_sentiment_analysis.ipynb
-    05_echo_chambers.ipynb
-
-/results
-    /figures
-    /tables
-
-README.md
-requirements.txt
-```
-
----
-
 # Reproductibilité
 
-Installation des dépendances :
-
-```bash
-pip install -r requirements.txt
-```
-
-Les notebooks peuvent ensuite être exécutés dans l’ordre indiqué dans le dossier `/notebooks`.
+Le notebook peut être exécuté dans l’ordre indiqué dans le dossier `/notebooks`.
 
 ---
 
@@ -207,7 +177,7 @@ Cette étude présente plusieurs limites :
 
 # Poster scientifique
 
-Le poster présenté dans le cadre du cours est disponible dans le dépôt du projet.
+Le poster présenté dans le cadre du cours  `/poster`.
 
 ---
 
