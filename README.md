@@ -211,13 +211,13 @@ Cette étude présente plusieurs limites :
 
 # Structure du projet
 
-- `/notebooks` - notebook principal d’analyse
+- `/notebook` - notebook principal d’analyse
 - `/poster` - poster scientifique du projet
 - `/data` - fichiers CSV utilisés pour l’analyse
 
 ---
 
-# Technologies utilisées
+# Packages 
 
 - Python
 - pandas
