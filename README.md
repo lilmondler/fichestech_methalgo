@@ -1,7 +1,6 @@
-# fichestech_methalgo
+# # Cartographie des sous-cultures numériques  
 Cartographie des sous-cultures numériques : Analyse comparative des communautés incels et femcels sur Reddit
-# Cartographie des sous-cultures numériques  
-## Analyse comparative des communautés Incels et Femcels sur Reddit
+## Fiche technique
 
 ### Réalisé par  
 **Snezhana Galimova**  
